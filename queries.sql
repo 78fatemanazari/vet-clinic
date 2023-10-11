@@ -16,3 +16,21 @@ SELECT * From animals Where neutered = true ;
 SELECT * From animals Where name not in ('Gabumon'); 
 /* The 8th query*/
 SELECT * From animals Where (weight_kg >= '10.4' and weight_kg <= '17.3');
+
+--Second project - transactions - species column and insertion
+UPDATE animals set species = 'digimon' Where name Like '%mon';
+UPDATE animals set species = 'pokemon' Where species is null;
+
+--SECOND PROJET - TRANSACTION- Delete animals table
+BEGIN Transaction;
+DELETE FROM animals;
+ROLLBACK;
+
+--SECOND PROJET - TRANSACTION- multiply rows to -1
+BEGIN Transaction;
+DELETE From animals Where date_of_Birth > '2022-01-01';
+UPDATE animals set weight_kg = (weight_kg * -1);
+SAVEPOINT fn1;
+ROLLBACK to fn1;
+Update animals set weight_kg = (weight_kg * -1) Where weight_kg < 0;
+COMMIT;
