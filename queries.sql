@@ -21,9 +21,14 @@ SELECT * From animals Where (weight_kg >= '10.4' and weight_kg <= '17.3');
 /* Second Project*/
 
 --PART ONE - transactions - species column and insertion
-UPDATE animals set species = 'digimon' Where name Like '%mon';
 --PART TWO - transactions - species column and insertion
-UPDATE animals set species = 'pokemon' Where species is null;
+BEGIN;
+UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
+UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
+SELECT species from animals; 
+COMMIT;
+SELECT species from animals;
+commit;
 
 --PART THREE - TRANSACTION- Delete animals table
 BEGIN Transaction;
