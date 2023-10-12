@@ -1,4 +1,5 @@
 /* Queries about animals table*/
+/* First Project*/
 
 /* The 1st query */
 SELECT * From animals Where name Like '%mon';
@@ -17,16 +18,19 @@ SELECT * From animals Where name not in ('Gabumon');
 /* The 8th query*/
 SELECT * From animals Where (weight_kg >= '10.4' and weight_kg <= '17.3');
 
---Second project - transactions - species column and insertion
+/* Second Project*/
+
+--PART ONE - transactions - species column and insertion
 UPDATE animals set species = 'digimon' Where name Like '%mon';
+--PART TWO - transactions - species column and insertion
 UPDATE animals set species = 'pokemon' Where species is null;
 
---SECOND PROJET - TRANSACTION- Delete animals table
+--PART THREE - TRANSACTION- Delete animals table
 BEGIN Transaction;
 DELETE FROM animals;
 ROLLBACK;
 
---SECOND PROJET - TRANSACTION- multiply rows to -1
+--PART 4 - TRANSACTION- multiply rows to -1
 BEGIN Transaction;
 DELETE From animals Where date_of_Birth > '2022-01-01';
 UPDATE animals set weight_kg = (weight_kg * -1);
@@ -34,3 +38,21 @@ SAVEPOINT fn1;
 ROLLBACK to fn1;
 Update animals set weight_kg = (weight_kg * -1) Where weight_kg < 0;
 COMMIT;
+
+/* QUERIES - PART 5*/
+
+-- 1st query
+SELECT Count(name) From animals;
+-- 2nd query
+SELECT Count(name) From animals Where escape_attempts = 0;
+-- 3th query
+SELECT Avg(weight_kg) From animals;
+-- 4th query
+SELECT neutered, Count(neutered) From animals Group by (neutered); 
+-- 5th query
+SELECT species, Min(weight_kg) From animals Group by species;
+SELECT species, Max(weight_kg) From animals Group by species;
+-- 6th query
+SELECT species, Avg(escape_attempts) From animals Where
+(date_of_birth Between '1990-01-01' and '2000-12-31')
+Group by (species); 
