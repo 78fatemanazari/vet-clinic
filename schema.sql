@@ -11,3 +11,8 @@ CREATE TABLE IF NOT EXISTS public.animals
     CONSTRAINT animals_pkey PRIMARY KEY (id)
 )
 
+--Update animals table and queries
+
+ALTER TABLE IF EXISTS public.animals
+    ADD COLUMN IF NOT EXISTS species character varying(100) COLLATE pg_catalog."default";
+
