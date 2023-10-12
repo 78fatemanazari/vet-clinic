@@ -20,7 +20,12 @@ SELECT * From animals Where (weight_kg >= '10.4' and weight_kg <= '17.3');
 
 /* Second Project*/
 
---PART ONE - transactions - species column and insertion
+--PART ONE - transactions - animals table by setting the species column to unspecified
+BEGIN;
+UPDATE animals SET species = 'unspecified';
+SELECT species from animals;
+ROLLBACK;
+SELECT species from animals;
 --PART TWO - transactions - species column and insertion
 BEGIN;
 UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
