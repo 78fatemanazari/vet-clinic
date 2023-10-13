@@ -83,9 +83,11 @@ SELECT COUNT(DISTINCT v.animal_id) AS animal_count
 FROM visits AS v
 JOIN vets AS vet ON v.vet_id = vet.id
 WHERE vet.name = 'Stephanie Mendez';
-
 -- Query 3:
-
+SELECT v.name, s.species_id, sp.name as specialty
+FROM vets as v
+LEFT JOIN specializations as s ON (v.id = s.vet_id)
+LEFT JOIN species as sp ON (s.species_id = sp.id);
 -- Query 4:
 SELECT a.name AS animal_name
 FROM animals AS a
@@ -124,3 +126,13 @@ JOIN vets AS vet ON v.vet_id = vet.id
 LEFT JOIN specializations AS s ON vet.id = s.vet_id AND a.species_id = s.species_id
 WHERE s.vet_id IS NULL;
 -- query 9:
+SELECT a.name as animal, ve.name as vet, 
+s.name as species, COUNT(v.date_of_visit) 
+FROM visits as v
+JOIN animals as a ON (v.animal_id = a.id)
+JOIN vets as ve ON (v.vet_id = ve.id)
+LEFT JOIN species as s ON (a.species_id = s.id)
+WHERE (v.vet_id = (SELECT (id) FROM vets 
+	WHERE v.vet_id = vets.id 
+	AND vets.name = ('Maisy Smith')))
+GROUP BY a.name, ve.name, s.name;
