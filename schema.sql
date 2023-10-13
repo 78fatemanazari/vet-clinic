@@ -51,12 +51,18 @@ CREATE TABLE IF NOT EXISTS public.vets
 )
 --Specializations table
 CREATE TABLE IF NOT EXISTS public.species
+CREATE TABLE IF NOT EXISTS public.specializations
 (
-    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    name character varying COLLATE pg_catalog."default",
-    CONSTRAINT species_pkey PRIMARY KEY (id)
+    vet_id integer NOT NULL,
+    species_id integer NOT NULL,
+    id integer,
+    CONSTRAINT specializations_pkey PRIMARY KEY (vet_id, species_id)
 )
 --Visits table
 CREATE TABLE IF NOT EXISTS public.visits
 (
+    animal_id integer NOT NULL,
+    vet_id integer NOT NULL,
+    visit_date date NOT NULL,
+    CONSTRAINT visits_pkey PRIMARY KEY (animal_id, vet_id, visit_date)
 )
