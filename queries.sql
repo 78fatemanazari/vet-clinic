@@ -66,3 +66,4 @@ SELECT species, Max(weight_kg) From animals Group by species;
 SELECT species, Avg(escape_attempts) From animals Where
 (date_of_birth Between '1990-01-01' and '2000-12-31')
 Group by (species); 
+
