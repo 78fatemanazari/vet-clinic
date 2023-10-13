@@ -67,3 +67,72 @@ SELECT species, Avg(escape_attempts) From animals Where
 (date_of_birth Between '1990-01-01' and '2000-12-31')
 Group by (species); 
 
+/* Fourth Project*/
+
+-- Query 1:
+SELECT a.name
+FROM animals AS a
+JOIN visits AS v ON a.id = v.animal_id
+JOIN vets AS vet ON v.vet_id = vet.id
+WHERE vet.name = 'Vet William Tatcher'
+ORDER BY v.visit_date DESC
+LIMIT 1;
+
+-- Query 2:
+SELECT COUNT(DISTINCT v.animal_id) AS animal_count
+FROM visits AS v
+JOIN vets AS vet ON v.vet_id = vet.id
+WHERE vet.name = 'Stephanie Mendez';
+-- Query 3:
+SELECT v.name, s.species_id, sp.name as specialty
+FROM vets as v
+LEFT JOIN specializations as s ON (v.id = s.vet_id)
+LEFT JOIN species as sp ON (s.species_id = sp.id);
+-- Query 4:
+SELECT a.name AS animal_name
+FROM animals AS a
+JOIN visits AS v ON a.id = v.animal_id
+JOIN vets AS vet ON v.vet_id = vet.id
+WHERE vet.name = 'Stephanie Mendez'
+AND v.visit_date >= '2020-04-01' 
+AND v.visit_date <= '2020-08-30';
+-- Query 5:
+SELECT a.name AS animal_name, COUNT(v.animal_id) AS visit_count
+FROM animals AS a
+JOIN visits AS v ON a.id = v.animal_id
+GROUP BY a.name
+ORDER BY visit_count DESC
+LIMIT 1;
+-- Query 6:
+SELECT a.name AS animal_name, MIN(v.visit_date) AS first_visit_date
+FROM animals AS a
+JOIN visits AS v ON a.id = v.animal_id
+JOIN vets AS vet ON v.vet_id = vet.id
+WHERE vet.name = 'Maisy Smith'
+GROUP BY a.name
+ORDER BY first_visit_date
+LIMIT 1;
+-- Query 7:
+SELECT a.name AS animal_name, vet.name AS vet_name, v.visit_date AS visit_date
+FROM visits AS v
+JOIN animals AS a ON v.animal_id = a.id
+JOIN vets AS vet ON v.vet_id = vet.id
+WHERE v.visit_date = (SELECT MAX(visit_date) FROM visits);
+-- Query 8:
+SELECT COUNT(*) AS visits_without_specialty
+FROM visits AS v
+JOIN animals AS a ON v.animal_id = a.id
+JOIN vets AS vet ON v.vet_id = vet.id
+LEFT JOIN specializations AS s ON vet.id = s.vet_id AND a.species_id = s.species_id
+WHERE s.vet_id IS NULL;
+-- query 9:
+SELECT a.name as animal, ve.name as vet, 
+s.name as species, COUNT(v.date_of_visit) 
+FROM visits as v
+JOIN animals as a ON (v.animal_id = a.id)
+JOIN vets as ve ON (v.vet_id = ve.id)
+LEFT JOIN species as s ON (a.species_id = s.id)
+WHERE (v.vet_id = (SELECT (id) FROM vets 
+	WHERE v.vet_id = vets.id 
+	AND vets.name = ('Maisy Smith')))
+GROUP BY a.name, ve.name, s.name;
