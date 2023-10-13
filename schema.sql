@@ -38,3 +38,22 @@ CREATE TABLE IF NOT EXISTS public.animals
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
+
+--Fourth Project
+--Vets table:
+CREATE TABLE IF NOT EXISTS public.vets
+(
+    id integer NOT NULL,
+    name character varying(100) COLLATE pg_catalog."default",
+    age integer,
+    date_of_graduation date,
+    CONSTRAINT vets_pkey PRIMARY KEY (id)
+)
+--Specializations table
+CREATE TABLE IF NOT EXISTS public.specializations
+(
+)
+--Visits table
+CREATE TABLE IF NOT EXISTS public.visits
+(
+)
